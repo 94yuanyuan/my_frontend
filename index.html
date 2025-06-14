@@ -21,14 +21,24 @@
 		const username = document.getElementById('username').value.trim();
 		const password = document.getElementById('password').value;
 		
-		const res = await fetch('https://my-backend-9pkr.onrender.com/login',{
+		try {
+			const res = await fetch('https://my-backend-9pkr.onrender.com/login',{
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
 			body:JSON.stringify({username , password})
-		});
-		
-		const result = await res.json();
-		document.getElementById('loginResult').innerText = result.message;
+			});
+			
+			if(!res.ok){
+				throw new Error(`HTTP 錯誤: ${res.status}`);
+			}
+			
+			const result = await res.json();
+			document.getElementById('loginResult').innerText = result.message;
+		} catch (error) {
+			// 捕捉連線錯誤、CORS 問題、或 API 拋出的錯誤
+			console.error('發生錯誤:', error);
+			document.getElementById('loginResult').innerText = '登入失敗，請稍後再試';
+		}
 	});
 </script>
 </html>

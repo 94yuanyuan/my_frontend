@@ -7,5 +7,28 @@
 <body>
   <h1>歡迎使用我的倉儲系統</h1>
   <p>此網站尚在開發中...</p>
+  
+  <h2>登入系統</h2>
+  <div id="loginBox">
+	<input type="text" id="username" placeholder="帳號" /><br />
+	<input type="password" id="password" placeholder="密碼" /><br />
+	<button id="loginBtn">登入</button>
+  </div>
+  <p id="loginResult"></p>
 </body>
+<script>
+	document.getElementById('loginBtn').addEventListener('click',async function(){
+		const username = document.getElementById('username').value.trim();
+		const password = document.getElementById('password').value;
+		
+		const res await fatch('https://my-backend-9pkr.onrender.com',{
+			method:'POST',
+			headers:{'Content-Type':'application/json'},
+			body:JSON.stringify({username , password})
+		});
+		
+		const result = await res.json();
+		document.getElementById('loginResult').innerText = result.message;
+	});
+</script>
 </html>

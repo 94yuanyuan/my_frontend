@@ -54,6 +54,8 @@
 		// 捕捉 API 拋出的錯誤
         this.message = '無法連線到伺服器，請檢查網路或稍後再試';
         console.error('發生錯誤:', err);
+      } finally {
+        this.isLoading = false; // 無論成功與否都解鎖
       }
     },
 	
@@ -62,7 +64,6 @@
 	  this.username = '';
 	  this.password = '';
 	  this.message = '';
-	  this.isLoading = false; // 解鎖按鈕
 	}
   }">
   

@@ -25,7 +25,10 @@
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: this.username, password: this.password })
+          body: JSON.stringify({
+		    username: this.username.trim(),
+			password: this.password
+		  })
         });
 		// 捕捉連線錯誤、CORS 問題
 		if(!res.ok){
@@ -47,6 +50,13 @@
         console.error('發生錯誤:', err);
       }
     }
+	
+	logout() {
+	  this.username = '';
+	  this.password = '';
+	  this.message = '';
+	  this.page = 'login';
+	}
   }">
   
     <template v-if="page === 'login'">
@@ -59,7 +69,7 @@
 
     <template v-if="page === 'dashboard'">
       <h2>歡迎 {{ username }}</h2>
-      <button @click="page = 'login'">登出</button>
+      <button @click="logout">登出</button>
     </template>
 
   </div>

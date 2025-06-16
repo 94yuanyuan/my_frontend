@@ -14,9 +14,15 @@
     username: '',
     password: '',
     message: '',
+	isTestMode: new URLSearchParams(location.search).get('testMode') === '1',
     async login() {
       try {
-        const res = await fetch('https://my-backend-9pkr.onrender.com/login', {
+		// 判斷是否進入測試模式
+		const url = this.isTestMode
+          ? 'https://my-backend-9pkr.onrender.com/404' // 模擬錯誤網址
+          : 'https://my-backend-9pkr.onrender.com/login';
+		
+        const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: this.username, password: this.password })
@@ -44,7 +50,7 @@
   }">
   
     <template v-if="page === 'login'">
-      <h2>登入系統</h2>
+      <h2>登入系統 <small v-if="isTestMode">(測試模式)</small></h2>
       <input v-model="username" type="text" placeholder="帳號" /><br />
       <input v-model="password" type="password" placeholder="密碼" /><br />
       <button @click="login" :disabled="!username || !password">登入</button>

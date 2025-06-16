@@ -3,42 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <title>倉儲系統首頁</title>
+  <script src="https://unpkg.com/petite-vue" defer init></script>
 </head>
 <body>
   <h1>歡迎使用我的倉儲系統</h1>
   <p>此網站尚在開發中...</p>
-  
-  <h2>登入系統</h2>
-  <div id="loginBox">
-	<input type="text" id="username" placeholder="帳號" /><br />
-	<input type="password" id="password" placeholder="密碼" /><br />
-	<button id="loginBtn">登入</button>
-  </div>
-  <p id="loginResult"></p>
-</body>
-<script>
-	document.getElementById('loginBtn').addEventListener('click',async function(){
-		const username = document.getElementById('username').value.trim();
-		const password = document.getElementById('password').value;
-		
-		try {
-			const res = await fetch('https://my-backend-9pkr.onrender.com/login',{
-			method:'POST',
-			headers:{'Content-Type':'application/json'},
-			body:JSON.stringify({username , password})
-			});
-			
-			if(!res.ok){
-				throw new Error(`HTTP 錯誤: ${res.status}`);
-			}
-			
-			const result = await res.json();
-			document.getElementById('loginResult').innerText = result.message;
-		} catch (error) {
-			// 捕捉連線錯誤、CORS 問題、或 API 拋出的錯誤
-			console.error('發生錯誤:', error);
-			document.getElementById('loginResult').innerText = '登入失敗，請稍後再試';
+
+  <div v-scope="{
+    page: 'login',
+    username: '',
+    password: '',
+    message: '',
+    async login() {
+      try {
+        const res = await fetch('https://my-backend-9pkr.onrender.com/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: this.username, password: this.password })
+        });
+		// 捕捉連線錯誤、CORS 問題
+		if(!res.ok){
+			this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+			return;
 		}
-	});
-</script>
+		
+        const result = await res.json();
+        this.message = result.message;
+		
+        if (result.success) {
+		  this.password = '';
+          this.page = 'dashboard';
+        }
+		
+      } catch (err) {
+		// 捕捉 API 拋出的錯誤
+        this.message = '無法連線到伺服器，請檢查網路或稍後再試';
+        console.error('發生錯誤:', err);
+      }
+    }
+  }">
+  
+    <template v-if="page === 'login'">
+      <h2>登入系統</h2>
+      <input v-model="username" type="text" placeholder="帳號" /><br />
+      <input v-model="password" type="password" placeholder="密碼" /><br />
+      <button @click="login" :disabled="!username || !password">登入</button>
+      <p style="color:red">{{ message }}</p>
+    </template>
+
+    <template v-if="page === 'dashboard'">
+      <h2>歡迎 {{ username }}</h2>
+      <button @click="page = 'login'">登出</button>
+    </template>
+
+  </div>
+</body>
 </html>

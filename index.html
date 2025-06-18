@@ -64,6 +64,40 @@
 	  this.username = '';
 	  this.password = '';
 	  this.message = '';
+	},
+	
+	products: '',
+	async srcProducts() {
+	  
+	  this.message = '';     // 清空錯誤訊息
+	  
+	  try {
+	    // 判斷是否進入測試模式
+		const url = this.isTestMode
+          ? 'https://my-backend-9pkr.onrender.com/404' // 模擬錯誤網址
+          : 'https://my-backend-9pkr.onrender.com/api/products';
+		
+		const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+		    limit: 3, // 先寫死固定數
+		  })
+        });
+		// 捕捉連線錯誤、CORS 問題
+		if(!res.ok){
+			this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+			return;
+		}
+		
+		const result = await res.json();
+		this.products = result;
+		
+	  } catch (err) {
+		// 捕捉 API 拋出的錯誤
+        this.message = '無法連線到伺服器，請檢查網路或稍後再試';
+        console.error('發生錯誤:', err);
+	  }
 	}
   }">
   
@@ -80,6 +114,7 @@
     <template v-if="page === 'dashboard'">
       <h2>歡迎 {{ username }}</h2>
       <button @click="logout">登出</button>
+	  <button @click="srcProducts">查詢</button>
     </template>
 
   </div>

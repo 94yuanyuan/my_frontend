@@ -75,14 +75,10 @@
 	    // 判斷是否進入測試模式
 		const url = this.isTestMode
           ? 'https://my-backend-9pkr.onrender.com/404' // 模擬錯誤網址
-          : 'https://my-backend-9pkr.onrender.com/api/products';
+          : 'https://my-backend-9pkr.onrender.com/api/products?limit=3';
 		
 		const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-		    limit: 3, // 先寫死固定數
-		  })
+          method: 'GET'
         });
 		// 捕捉連線錯誤、CORS 問題
 		if(!res.ok){

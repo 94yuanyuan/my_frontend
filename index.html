@@ -16,19 +16,27 @@
     message: '',
 	isTestMode: new URLSearchParams(location.search).get('testMode') === '1',
 	isLoading: false, // <== 新增鎖定變數
+	
+	// === 工具函式 ===
+    getApiUrl(path) {
+      return this.isTestMode
+        ? 'https://my-backend-9pkr.onrender.com/404'
+        : `https://my-backend-9pkr.onrender.com${path}`;
+    },
+	
+	showError(err, fallback = '無法連線到伺服器，請檢查網路或稍後再試') {
+      console.error('錯誤:', err);
+      this.message = fallback;
+    },
+	
+	// === 功能區 ===
     async login() {
 	  if (this.isLoading) return; // <== 防止重複點擊
-	  
 	  this.isLoading = true; // 鎖定按鈕
       this.message = '';     // 清空錯誤訊息
 	  
       try {
-		// 判斷是否進入測試模式
-		const url = this.isTestMode
-          ? 'https://my-backend-9pkr.onrender.com/404' // 模擬錯誤網址
-          : 'https://my-backend-9pkr.onrender.com/login';
-		
-        const res = await fetch(url, {
+        const res = await fetch(this.getApiUrl('/login'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -36,24 +44,23 @@
 			password: this.password
 		  })
         });
-		// 捕捉連線錯誤、CORS 問題
+		
+		// 捕捉 API 拋出的錯誤
 		if(!res.ok){
-			this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
-			return;
+		  this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+		  return;
 		}
 		
         const result = await res.json();
         this.message = result.message;
-		
         if (result.success) {
 		  this.password = '';
           this.page = 'dashboard';
         }
 		
       } catch (err) {
-		// 捕捉 API 拋出的錯誤
-        this.message = '無法連線到伺服器，請檢查網路或稍後再試';
-        console.error('發生錯誤:', err);
+		// 捕捉連線錯誤、CORS 問題
+        this.showError(err);
       } finally {
         this.isLoading = false; // 無論成功與否都解鎖
       }
@@ -66,33 +73,25 @@
 	  this.message = '';
 	},
 	
-	products: '',
+	products: [],
 	async srcProducts() {
-	  
-	  this.message = '';     // 清空錯誤訊息
+	  this.message = ''; // 清空錯誤訊息
 	  
 	  try {
-	    // 判斷是否進入測試模式
-		const url = this.isTestMode
-          ? 'https://my-backend-9pkr.onrender.com/404' // 模擬錯誤網址
-          : 'https://my-backend-9pkr.onrender.com/api/products?limit=3';
-		
-		const res = await fetch(url, {
+		const res = await fetch(this.getApiUrl('/api/products?limit=3'), {
           method: 'GET'
         });
-		// 捕捉連線錯誤、CORS 問題
+		
 		if(!res.ok){
-			this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
-			return;
+		  this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+		  return;
 		}
 		
 		const result = await res.json();
 		this.products = result;
 		
 	  } catch (err) {
-		// 捕捉 API 拋出的錯誤
-        this.message = '無法連線到伺服器，請檢查網路或稍後再試';
-        console.error('發生錯誤:', err);
+        this.showError(err);
 	  }
 	}
   }">
@@ -111,6 +110,16 @@
       <h2>歡迎 {{ username }}</h2>
       <button @click="logout">登出</button>
 	  <button @click="srcProducts">查詢</button>
+	  <p style="color:red">{{ message }}</p>
+	  
+	  <div v-if="products.length">
+        <h3>商品清單</h3>
+        <ul>
+          <li v-for="p in products">
+            {{ p.client || '未指定' }} / {{ p.productCode }}
+          </li>
+        </ul>
+      </div>
     </template>
 
   </div>

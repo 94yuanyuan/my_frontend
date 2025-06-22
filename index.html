@@ -73,6 +73,7 @@
     },
 
 	products: [],
+	inventory: [],
     async srcProducts() {
       this.message = ''; // 清空錯誤訊息
 
@@ -90,6 +91,28 @@
         this.products = result;
 
       } catch (err) {
+        this.showError(err);
+      }
+
+      try {
+		const productCodes = this.products.map(p => p.productCode);
+        const res = await fetch(this.getApiUrl('/api/inventory/by-products'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productCodes
+          })
+        });
+
+        if (!res.ok) {
+          this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+          return;
+        }
+
+        result = await res.json();
+		this.inventory = result;
+
+	  } catch (err) {
         this.showError(err);
       }
     }
@@ -111,11 +134,11 @@
       <button @click="srcProducts">查詢</button>
       <p style="color:red">{{ message }}</p>
 
-      <div v-show="products.length">
-        <h3>商品清單</h3>
+      <div v-show="inventory.length">
+        <h3>商品庫存</h3>
         <ul>
-          <li v-for="p in products">
-            {{ p.client || '未指定' }} / {{ p.productCode }}
+          <li v-for="i in inventory">
+            {{ i.productCode }} / {{ i.warehouse }} / {{ i.quantity }}
           </li>
         </ul>
       </div>

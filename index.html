@@ -74,6 +74,7 @@
 
 	products: [],
 	inventory: [],
+	stockList: [],
     async srcProducts() {
       this.message = ''; // 清空錯誤訊息
 
@@ -115,6 +116,20 @@
 	  } catch (err) {
         this.showError(err);
       }
+
+	  this.stockList = this.products.map(p => {
+		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
+		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
+		return {
+		    productCode: p.productCode,
+		    stockByWarehouse: stocks.map(i => ({
+		    warehouse: i.warehouse,
+		    quantity: i.quantity
+		  })),
+		  total
+		};
+      });
+
     }
   }">
 
@@ -134,14 +149,33 @@
       <button @click="srcProducts">查詢</button>
       <p style="color:red">{{ message }}</p>
 
-      <div v-show="inventory.length">
-        <h3>商品庫存</h3>
-        <ul>
-          <li v-for="i in inventory">
-            {{ i.productCode }} / {{ i.warehouse }} / {{ i.quantity }}
-          </li>
-        </ul>
-      </div>
+	  <div v-for="item in stockList" :key="item.productCode" style="margin-bottom: 1em;">
+	    <details>
+	      <summary style="font-weight: bold; cursor: pointer;">
+	      商品代碼：{{ item.productCode }}
+	      </summary>
+	      <table style="width: 100%; margin-top: 0.5em; border-collapse: collapse;">
+	      <thead>
+	        <tr style="background-color: #f0f0f0;">
+	        <th style="text-align: left; padding: 5px;">倉別</th>
+	        <th style="text-align: right; padding: 5px;">庫存數</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
+	        <td style="padding: 5px;">{{ s.warehouse }}</td>
+	        <td style="padding: 5px; text-align: right;">{{ s.quantity }}</td>
+	        </tr>
+	      </tbody>
+	      <tfoot>
+	        <tr>
+	        <td style="padding: 5px; font-weight: bold;">總庫存數</td>
+	        <td style="padding: 5px; text-align: right; font-weight: bold;">{{ item.total }}</td>
+	        </tr>
+	      </tfoot>
+	      </table>
+	    </details>
+	  </div>
     </template>
 
   </div>

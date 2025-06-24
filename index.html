@@ -143,7 +143,7 @@
       <p style="color:red">{{ message }}</p>
     </template>
 
-    <template v-if="page === 'dashboard'">
+    <div v-if="page === 'dashboard'">
       <h2>歡迎 {{ username }}</h2>
       <button @click="logout">登出</button>
       <button @click="srcProducts">查詢</button>
@@ -176,7 +176,7 @@
 	      </table>
 	    </details>
 	  </div>
-    </template>
+    </div>
 
   </div>
 </body>

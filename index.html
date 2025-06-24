@@ -5,6 +5,44 @@
   <title>倉儲系統首頁</title>
   <script src="https://unpkg.com/petite-vue" defer init></script>
 </head>
+<style>
+  .message {
+    color: red;
+  }
+
+  .product-block {
+    margin-bottom: 1em;
+  }
+
+  .product-summary {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .stock-table {
+    width: 100%;
+    margin-top: 0.5em;
+    border-collapse: collapse;
+  }
+
+  .stock-table th,
+  .stock-table td {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .stock-table thead {
+    background-color: #f0f0f0;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+</style>
 <body>
   <h1>歡迎使用我的倉儲系統</h1>
   <p>此網站尚在開發中...</p>
@@ -140,42 +178,42 @@
       <button @click="login" :disabled="isLoading || !username || !password">
         {{ isLoading ? '登入中...' : '登入' }}
       </button>
-      <p style="color:red">{{ message }}</p>
+      <p class="message">{{ message }}</p>
     </template>
 
     <div v-if="page === 'dashboard'">
       <h2>歡迎 {{ username }}</h2>
       <button @click="logout">登出</button>
       <button @click="srcProducts">查詢</button>
-      <p style="color:red">{{ message }}</p>
-
-	  <div v-for="item in stockList" :key="item.productCode" style="margin-bottom: 1em;">
-	    <details>
-	      <summary style="font-weight: bold; cursor: pointer;">
-	      商品代碼：{{ item.productCode }}
-	      </summary>
-	      <table style="width: 100%; margin-top: 0.5em; border-collapse: collapse;">
-	      <thead>
-	        <tr style="background-color: #f0f0f0;">
-	        <th style="text-align: left; padding: 5px;">倉別</th>
-	        <th style="text-align: right; padding: 5px;">庫存數</th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	        <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
-	        <td style="padding: 5px;">{{ s.warehouse }}</td>
-	        <td style="padding: 5px; text-align: right;">{{ s.quantity }}</td>
-	        </tr>
-	      </tbody>
-	      <tfoot>
-	        <tr>
-	        <td style="padding: 5px; font-weight: bold;">總庫存數</td>
-	        <td style="padding: 5px; text-align: right; font-weight: bold;">{{ item.total }}</td>
-	        </tr>
-	      </tfoot>
-	      </table>
-	    </details>
-	  </div>
+      <p class="message">{{ message }}</p>
+    
+      <div v-for="item in stockList" :key="item.productCode" class="product-block">
+        <details>
+          <summary class="product-summary">
+            商品代碼：{{ item.productCode }}
+          </summary>
+          <table class="stock-table">
+            <thead>
+              <tr>
+                <th>倉別</th>
+                <th>庫存數</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
+                <td>{{ s.warehouse }}</td>
+                <td class="text-right">{{ s.quantity }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="bold">總庫存數</td>
+                <td class="text-right bold">{{ item.total }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </details>
+      </div>
     </div>
 
   </div>

@@ -42,6 +42,42 @@
   .bold {
     font-weight: bold;
   }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .modal-card {
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    max-width: 300px;
+    width: 80%;
+  }
+  
+  .detail-btn {
+    margin-top: 0.5em;
+    padding: 0.4em 1em;
+    background-color: #2c7be5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .detail-btn:hover {
+    background-color: #1a5fbb;
+  }
 </style>
 <body>
   <h1>歡迎使用我的倉儲系統</h1>
@@ -159,6 +195,7 @@
 		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
 		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
 		return {
+		    productNameZh: p.productNameZh,
 		    productCode: p.productCode,
 		    stockByWarehouse: stocks.map(i => ({
 		    warehouse: i.warehouse,
@@ -168,7 +205,21 @@
 		};
       });
 
-    }
+    },
+
+	showModal: false,
+	selectedProduct: {},
+
+	showDetail(product) {
+	  this.selectedProduct = product;
+	  this.showModal = true;
+	},
+
+	closeModal() {
+	  this.showModal = false;
+	  this.selectedProduct = {};
+	}
+
   }">
 
     <template v-if="page === 'login'">
@@ -190,7 +241,7 @@
       <div v-for="item in stockList" :key="item.productCode" class="product-block">
         <details>
           <summary class="product-summary">
-            商品代碼：{{ item.productCode }}
+            商品名稱：{{ item.productNameZh }}
           </summary>
           <table class="stock-table">
             <thead>
@@ -212,9 +263,22 @@
               </tr>
             </tfoot>
           </table>
+
+          <!-- 新增：明細按鈕 -->
+          <button @click="showDetail(item)" class="detail-btn">詳細資料</button>
         </details>
       </div>
     </div>
+
+	<!-- 彈出視窗 Modal -->
+	<div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+	  <div class="modal-card">
+	    <h3>商品詳細資料</h3>
+	    <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
+	    <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
+	    <button @click="closeModal">關閉</button>
+	  </div>
+	</div>
 
   </div>
 </body>

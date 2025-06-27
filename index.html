@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <title>倉儲系統首頁</title>
+  <!-- petite-vue -->
   <script src="https://unpkg.com/petite-vue" defer init></script>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  
+  <!-- Reset CSS -->
+  <link rel="stylesheet" href="./Reset.css">
+  
+  <!-- Bootstrap icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <style>
   .message {
@@ -54,15 +64,6 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
-  }
-  
-  .modal-card {
-    background: #fff;
-    padding: 1.5em;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    max-width: 300px;
-    width: 80%;
   }
   
   .detail-btn {
@@ -281,22 +282,29 @@
 
 	<!-- 彈出視窗 Modal -->
 	<div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-	  <div class="modal-card">
-	    <h3>商品詳細資料</h3>
-	    <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
-	    <p><strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}</p>
-	    <p><strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}</p>
-	    <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
-	    <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
-	    <p><strong>材積：</strong>{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}</p>
-	    <p><strong>長：</strong>{{ selectedProduct.length }}</p>
-	    <p><strong>寬：</strong>{{ selectedProduct.width }}</p>
-	    <p><strong>高：</strong>{{ selectedProduct.height }}</p>
-	    <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
-	    <p><strong>安全存量：</strong>{{ selectedProduct.safeStockQty }}</p>
-	    <p><strong>創建日期：</strong>{{ selectedProduct.createdAt.substring(0,10) }}</p>
-	    <button @click="closeModal">關閉</button>
+	
+	  <div class="card">
+	    <div class="card-header">商品詳細資料</div>
+	    <div class="card-body">
+	      <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
+	      <p><strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}</p>
+	      <p><strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}</p>
+	      <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
+	      <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
+	      <p><strong>材積(cm^3)：</strong>{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}</p>
+	      <p><strong>長(cm)：</strong>{{ selectedProduct.length }}</p>
+	      <p><strong>寬(cm)：</strong>{{ selectedProduct.width }}</p>
+	      <p><strong>高(cm)：</strong>{{ selectedProduct.height }}</p>
+	      <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
+	      <p><strong>安全存量：</strong>{{ selectedProduct.safeStockQty || '無' }}</p>
+	      <p><strong>創建日期：</strong>{{ selectedProduct.createdAt }}</p>
+	 	  <button @click="closeModal" type="button" class="btn btn-primary">
+	 	    <i class="bi bi-x-lg"></i>
+	 	    關閉
+	 	  </button>
+	    </div>
 	  </div>
+	  
 	</div>
 
   </div>

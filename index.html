@@ -195,8 +195,17 @@
 		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
 		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
 		return {
+		    client: p.client,
 		    productNameZh: p.productNameZh,
+			productNameEn: p.productNameEn,
 		    productCode: p.productCode,
+			unit: p.unit,
+			length: p.dimensions.length,
+			width: p.dimensions.width,
+			height: p.dimensions.height,
+			shelfLifeDays: p.shelfLifeDays,
+			safeStockQty: p.safeStockQty,
+			createdAt: p.createdAt,
 		    stockByWarehouse: stocks.map(i => ({
 		    warehouse: i.warehouse,
 		    quantity: i.quantity
@@ -241,7 +250,7 @@
       <div v-for="item in stockList" :key="item.productCode" class="product-block">
         <details>
           <summary class="product-summary">
-            商品名稱：{{ item.productNameZh }}
+            {{ item.productNameZh }}
           </summary>
           <table class="stock-table">
             <thead>
@@ -275,7 +284,17 @@
 	  <div class="modal-card">
 	    <h3>商品詳細資料</h3>
 	    <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
+	    <p><strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}</p>
+	    <p><strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}</p>
 	    <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
+	    <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
+	    <p><strong>材積：</strong>{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}</p>
+	    <p><strong>長：</strong>{{ selectedProduct.length }}</p>
+	    <p><strong>寬：</strong>{{ selectedProduct.width }}</p>
+	    <p><strong>高：</strong>{{ selectedProduct.height }}</p>
+	    <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
+	    <p><strong>安全存量：</strong>{{ selectedProduct.safeStockQty }}</p>
+	    <p><strong>創建日期：</strong>{{ selectedProduct.createdAt.substring(0,10) }}</p>
 	    <button @click="closeModal">關閉</button>
 	  </div>
 	</div>

@@ -147,29 +147,38 @@
       this.message = '';
     },
 
+	currentPage: 1,
+	pageSize: 4, // 設定一頁多少筆資料
+	totalPages: 1,
 	products: [],
 	inventory: [],
 	stockList: [],
-    async srcProducts() {
+
+    async fetchProductPage(page = 1) {
       this.message = ''; // 清空錯誤訊息
+	  this.currentPage = page;
 
       try {
-        const res = await fetch(this.getApiUrl('/api/products?limit=3'), {
-          method: 'GET'
+        const res = await fetch(this.getApiUrl('/api/products/page'), {
+          method: 'POST',
+		  headers: { 'Content-Type': 'application/json' },
+		  body: JSON.stringify({ page, pageSize: this.pageSize })
         });
 
         if (!res.ok) {
-          this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+          this.message = `伺服器錯誤 (${res.status})，請稍後再試!`;
           return;
         }
 
         const result = await res.json();
-        this.products = result;
+        this.products = result.products;
+		this.totalPages = result.totalPages;
 
       } catch (err) {
         this.showError(err);
       }
 
+	  // 再查詢庫存資料
       try {
 		const productCodes = this.products.map(p => p.productCode);
         const res = await fetch(this.getApiUrl('/api/inventory/by-products'), {
@@ -181,39 +190,39 @@
         });
 
         if (!res.ok) {
-          this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
+          this.message = `伺服器錯誤 (${res.status})，請稍後再試!!`;
           return;
         }
 
         result = await res.json();
 		this.inventory = result;
 
+	    this.stockList = this.products.map(p => {
+		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
+		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
+		  return {
+		  	client: p.client,
+		  	productNameZh: p.productNameZh,
+		  	productNameEn: p.productNameEn,
+		  	productCode: p.productCode,
+		  	unit: p.unit,
+		  	length: p.dimensions.length,
+		  	width: p.dimensions.width,
+		  	height: p.dimensions.height,
+		  	shelfLifeDays: p.shelfLifeDays,
+		  	safeStockQty: p.safeStockQty,
+		  	createdAt: p.createdAt,
+		  	stockByWarehouse: stocks.map(i => ({
+		  	warehouse: i.warehouse,
+		  	quantity: i.quantity
+		  	})),
+		  	total
+		  };
+		});
+
 	  } catch (err) {
         this.showError(err);
       }
-
-	  this.stockList = this.products.map(p => {
-		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
-		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
-		return {
-		    client: p.client,
-		    productNameZh: p.productNameZh,
-			productNameEn: p.productNameEn,
-		    productCode: p.productCode,
-			unit: p.unit,
-			length: p.dimensions.length,
-			width: p.dimensions.width,
-			height: p.dimensions.height,
-			shelfLifeDays: p.shelfLifeDays,
-			safeStockQty: p.safeStockQty,
-			createdAt: p.createdAt,
-		    stockByWarehouse: stocks.map(i => ({
-		    warehouse: i.warehouse,
-		    quantity: i.quantity
-		  })),
-		  total
-		};
-      });
 
     },
 
@@ -245,7 +254,7 @@
     <div v-if="page === 'dashboard'">
       <h2>歡迎 {{ username }}</h2>
       <button @click="logout">登出</button>
-      <button @click="srcProducts">查詢</button>
+      <button @click="fetchProductPage">查詢</button>
       <p class="message">{{ message }}</p>
     
       <div v-for="item in stockList" :key="item.productCode" class="product-block">
@@ -278,6 +287,34 @@
           <button @click="showDetail(item)" class="detail-btn">詳細資料</button>
         </details>
       </div>
+	  
+	  <nav aria-label="分頁導覽">
+		<ul class="pagination">
+	      <li class="page-item" :class="{ disabled: currentPage === 1 }">
+	        <a class="page-link" href="#" @click.prevent="fetchProductPage(currentPage - 1)">
+	        	&laquo;
+	        </a>
+	      </li>
+		     
+	      <li
+	        class="page-item"
+	        v-for="n in totalPages"
+	        :key="n"
+	        :class="{ active: currentPage === n }"
+	      >
+	        <a class="page-link" href="#" @click.prevent="fetchProductPage(n)">
+	        	{{ n }}
+	        </a>
+	      </li>
+		     
+	      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+	        <a class="page-link" href="#" @click.prevent="fetchProductPage(currentPage + 1)">
+	        	&raquo;
+	        </a>
+	      </li>
+	    </ul>
+	  </nav>
+	  
     </div>
 
 	<!-- 彈出視窗 Modal -->

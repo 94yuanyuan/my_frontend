@@ -1,184 +1,193 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <title>倉儲系統首頁</title>
-  <!-- petite-vue -->
-  <script src="https://unpkg.com/petite-vue" defer init></script>
-  
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  
-  <!-- Reset CSS -->
-  <link rel="stylesheet" href="./Reset.css">
-  
-  <!-- Bootstrap icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-  
-  <!-- RWD -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>倉儲系統首頁測試push</title>
+    <!-- petite-vue -->
+    <script src="https://unpkg.com/petite-vue" defer init></script>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./Reset.css" />
+
+    <!-- Bootstrap icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- RWD -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
   <style>
-  body {
-	background-color: #191e24;
-	color: white;
-  }
+    body {
+      background-color: #191e24;
+      color: white;
+    }
 
-  .container {
-	background-color: #1d232a;
-	padding: 24px;
-	border-radius: 8px;
-  }
+    .container {
+      background-color: #1d232a;
+      padding: 24px;
+      border-radius: 8px;
+    }
 
-  .message {
-	color: red;
-  }
+    .message {
+      color: red;
+    }
 
-  .product-block {
-	margin-bottom: 1em;
-  }
+    .product-block {
+      margin-bottom: 1em;
+    }
 
-  .product-summary {
-	font-weight: bolder;
-	cursor: pointer;
-  }
+    .product-summary {
+      font-weight: bolder;
+      cursor: pointer;
+    }
 
-  .stock-table {
-	width: 100%;
-	margin-top: 0.5em;
-	border-collapse: collapse;
-  }
+    .stock-table {
+      width: 100%;
+      margin-top: 0.5em;
+      border-collapse: collapse;
+    }
 
-  .stock-table th,
-  .stock-table td {
-	padding: 5px;
-	border-bottom: 1px solid #ccc;
-  }
+    .stock-table th,
+    .stock-table td {
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+    }
 
-  .stock-table thead {
-	background-color: #191e24;
-  }
+    .stock-table thead {
+      background-color: #191e24;
+    }
 
-  .text-right {
-	text-align: right;
-  }
+    .text-right {
+      text-align: right;
+    }
 
-  .bold {
-	font-weight: bold;
-  }
+    .bold {
+      font-weight: bold;
+    }
 
-  .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 999;
-  }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
 
-  .card {
-	background-color: #1d232a;
-	border-radius: 8px;
-	padding: 24px;
-  }
+    .card {
+      background-color: #1d232a;
+      border-radius: 8px;
+      padding: 24px;
+    }
 
-  .card-header {
-	padding: 0;
-	font-size: 24px;
-	margin-bottom: 24px;
-	font-weight: bolder;
-	display: flex;
-	justify-content: space-between;
-  }
+    .card-header {
+      padding: 0;
+      font-size: 24px;
+      margin-bottom: 24px;
+      font-weight: bolder;
+      display: flex;
+      justify-content: space-between;
+    }
 
-  .card-body {
-	line-height: normal;
-	background-color: #1a1d22;
-	border-radius: 8px;
-  }
+    .card-body {
+      line-height: normal;
+      background-color: #1a1d22;
+      border-radius: 8px;
+    }
 
-  .card-header .card-footer {
-	display: flex;
-	justify-content: space-between;
-  }
+    .card-header .card-footer {
+      display: flex;
+      justify-content: space-between;
+    }
 
-  .search-box {
-	background-color: #191e24;
-	border-radius: 8px;
-  }
+    .search-box {
+      background-color: #191e24;
+      border-radius: 8px;
+    }
 
-  .text-h1 {
-	font-size: 24px;
-	font-weight: bolder;
-	margin-bottom: 24px;
-  }
+    .text-h1 {
+      font-size: 24px;
+      font-weight: bolder;
+      margin-bottom: 24px;
+    }
 
-  .search-grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	padding: 16px;
-	grid-row-gap: 1em;
-	grid-column-gap: 1em;
-	font-size: 14px;
-  }
-  
-  .search-box.btn {
-    margin-bottom: 24px;
-  }
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      padding: 16px;
+      grid-row-gap: 1em;
+      grid-column-gap: 1em;
+      font-size: 14px;
+    }
 
-  .search-item {
-	display: flex;
-	flex-direction: column;
-  }
+    .search-box.btn {
+      margin-bottom: 24px;
+    }
 
-  .val-input {
-	background-color: transparent;
-	color: white;
-	border: 1px solid;
-	border-radius: 4px;
-	padding: 10px;
-	margin-top: 5px;
-	height: 38px;
-	border-color: #464e58;
-  }
-  
-  .text-h3 {
-	padding: 80px 0;
-	font-size: 18px;
-	text-align: center;
-	line-height: 48px;
-  }
-  
-  .bi.bi-search {
-    font-size: 36px;
-	color: #9ba2ae;
-  }
-  
-  .page-item.disabled a.page-link,
-  a.page-link {
-    background-color: #191e24;
-	border-color: #464e58;
-  }
-  
-  .btn-row {
-    display: flex;
-    justify-content: flex-end;
-    padding: 16px;
-    padding-top: 0;
-  }
-  
-  option {
-    background-color: #191e24;
-  }
+    .search-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .val-input {
+      background-color: transparent;
+      color: white;
+      border: 1px solid;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 5px;
+      height: 38px;
+      border-color: #464e58;
+    }
+
+    .text-h3 {
+      padding: 80px 0;
+      font-size: 18px;
+      text-align: center;
+      line-height: 48px;
+    }
+
+    .bi.bi-search {
+      font-size: 36px;
+      color: #9ba2ae;
+    }
+
+    .page-item.disabled a.page-link,
+    a.page-link {
+      background-color: #191e24;
+      border-color: #464e58;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px;
+      padding-top: 0;
+    }
+
+    option {
+      background-color: #191e24;
+    }
   </style>
-<body>
-  <h1>歡迎使用我的倉儲系統</h1>
-  <p>此網站尚在開發中...</p>
-  <div v-scope="{
+  <body>
+    <h1>歡迎使用我的倉儲系統</h1>
+    <p>此網站尚在開發中...</p>
+    <div
+      v-scope="{
 	page: 'login',
 	username: '',
 	password: '',
@@ -333,182 +342,192 @@
 	  this.selectedProduct = {};
 	}
 
-  }">
+  }"
+    >
+      <template v-if="page === 'login'">
+        <h2>登入系統 <small v-if="isTestMode">(測試模式)</small></h2>
+        <input v-model="username" placeholder="帳號" type="text" /><br />
+        <input v-model="password" placeholder="密碼" type="password" /><br />
+        <button @click="login" :disabled="isLoading || !username || !password">
+          {{ isLoading ? '登入中...' : '登入' }}
+        </button>
+        <p class="message">{{ message }}</p>
+      </template>
 
-	<template v-if="page === 'login'">
-	  <h2>登入系統 <small v-if="isTestMode">(測試模式)</small></h2>
-	  <input v-model="username" placeholder="帳號" type="text"><br>
-	  <input v-model="password" placeholder="密碼" type="password"><br>
-	  <button @click="login" :disabled="isLoading || !username || !password">
-		{{ isLoading ? '登入中...' : '登入' }}
-	  </button>
-	  <p class="message">{{ message }}</p>
-    </template>
-
-	<div v-if="page === 'dashboard'">
-	  <h2>歡迎 {{ username }}</h2>
-	  <button @click="logout" class="btn btn-primary">登出</button>
-	  <p class="message">{{ message }}</p>
-      <div class="container">
-		<h1 class="text-h1">查詢庫存</h1>
-        <div class="search-box">
-          <div class="search-grid">
-            <div class="search-item">
-              <span>商品名稱</span> <input class="val-input" placeholder="輸入商品名稱">
+      <div v-if="page === 'dashboard'">
+        <h2>歡迎 {{ username }}</h2>
+        <button @click="logout" class="btn btn-primary">登出</button>
+        <p class="message">{{ message }}</p>
+        <div class="container">
+          <h1 class="text-h1">查詢庫存</h1>
+          <div class="search-box">
+            <div class="search-grid">
+              <div class="search-item">
+                <span>商品名稱</span>
+                <input class="val-input" placeholder="輸入商品名稱" />
+              </div>
+              <div class="search-item">
+                <span>廠商</span>
+                <select class="val-input">
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div class="search-item">
+                <span>顯示筆數</span>
+                <select class="val-input" v-model="pageSize">
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="15">15</option>
+                </select>
+              </div>
+              <div class="search-item">
+                <span>最新進貨</span>
+                <select class="val-input">
+                  <option value="0">不限時間</option>
+                  <option value="1">1 天</option>
+                  <option value="7">1 周</option>
+                  <option value="30">1 月</option>
+                  <option value="365">1 年</option>
+                </select>
+              </div>
             </div>
-            <div class="search-item">
-              <span>廠商</span>
-			  <select class="val-input">
-                <option value="">
-                  All
-                </option>
-              </select>
-            </div>
-            <div class="search-item">
-              <span>顯示筆數</span>
-			  <select class="val-input" v-model="pageSize">
-                <option :value="5">
-                  5
-                </option>
-                <option :value="10">
-                  10
-                </option>
-                <option :value="15">
-                  15
-                </option>
-              </select>
-            </div>
-            <div class="search-item">
-              <span>最新進貨</span>
-			  <select class="val-input">
-                <option value="0">
-                  不限時間
-                </option>
-                <option value="1">
-                  1 天
-                </option>
-                <option value="7">
-                  1 周
-                </option>
-                <option value="30">
-                  1 月
-                </option>
-                <option value="365">
-                  1 年
-                </option>
-              </select>
-            </div>
-		  </div>
-		  
-		  <button @click="fetchProductPage(1)" class="btn btn-primary">查詢</button>
-		</div>
 
-		<div class="text-h3">
-		  <i class="bi bi-search"></i>
-		  <h3>開始查詢庫存</h3>
-		</div>
+            <button @click="fetchProductPage(1)" class="btn btn-primary">
+              查詢
+            </button>
+          </div>
 
-		<div v-for="item in stockList" :key="item.productCode" class="product-block">
-          <details>
-            <summary class="product-summary">
-              {{ item.productNameZh }}
-            </summary>
-            <table class="stock-table">
-              <thead>
-                <tr>
-                  <th>倉別</th>
-                  <th>庫存數</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
-                  <td>{{ s.warehouse }}</td>
-                  <td class="text-right">{{ s.quantity }}</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td class="bold">總庫存數</td>
-                  <td class="text-right bold">{{ item.total }}</td>
-                </tr>
-              </tfoot>
-            </table>
+          <div class="text-h3">
+            <i class="bi bi-search"></i>
+            <h3>開始查詢庫存</h3>
+          </div>
 
-			<!-- 新增：明細按鈕 -->
-            <button @click="showDetail(item)" class="btn btn-primary">詳細資料</button>
-          </details>
+          <div
+            v-for="item in stockList"
+            :key="item.productCode"
+            class="product-block"
+          >
+            <details>
+              <summary class="product-summary">
+                {{ item.productNameZh }}
+              </summary>
+              <table class="stock-table">
+                <thead>
+                  <tr>
+                    <th>倉別</th>
+                    <th>庫存數</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
+                    <td>{{ s.warehouse }}</td>
+                    <td class="text-right">{{ s.quantity }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="bold">總庫存數</td>
+                    <td class="text-right bold">{{ item.total }}</td>
+                  </tr>
+                </tfoot>
+              </table>
 
-        </div>
-		
-        <nav aria-label="分頁導覽">
-          <ul class="pagination">
-            <li
-			  class="page-item"
-			  :class="{ disabled: currentPage === 1 }">
-              <a
-			    class="page-link" href="#" aria-label="Previous"
-				@click.prevent="fetchProductPage(currentPage - 1)">
-				<span aria-hidden="true">&laquo;</span>
-			  </a>
-            </li>
-			
-            <li
-			  class="page-item"
-			  v-for="n in totalPages"
-			  :key="n"
-			  :class="{ active: currentPage === n }">
-              <a
-				class="page-link" href="#"
-				@click.prevent="fetchProductPage(n)">
-				{{ n }}
-			  </a>
-            </li>
-			
-            <li
-			  class="page-item"
-			  :class="{ disabled: currentPage === totalPages }">
-              <a
-				class="page-link" href="#" aria-label="Next"
-				@click.prevent="fetchProductPage(currentPage + 1)">
-				<span aria-hidden="true">&raquo;</span>
-			  </a>
-            </li>
-          </ul>
-        </nav>
-		
-      </div>
-    </div>
-	<!-- 彈出視窗 Modal -->
-    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="card">
-        <div class="card-header">
-          <h3>商品詳細資料</h3>
-		  <i @click="closeModal" class="bi bi-x-lg"></i>
-        </div>
-        <div class="card-body">
-          <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
-          <p><strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}</p>
-          <p><strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}</p>
-          <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
-          <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
-          <p><strong>材積(cm^3)：</strong>{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}</p>
-          <p><strong>長(cm)：</strong>{{ selectedProduct.length }}</p>
-          <p><strong>寬(cm)：</strong>{{ selectedProduct.width }}</p>
-          <p><strong>高(cm)：</strong>{{ selectedProduct.height }}</p>
-          <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
-          <p><strong>安全存量：</strong>{{ selectedProduct.safeStockQty || '無' }}</p>
-          <p><strong>創建日期：</strong>{{ selectedProduct.createdAt }}</p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary" type="button">
-			<i class="bi bi-save"></i>
-			更新資料
-		  </button>
-		  <button @click="closeModal" class="btn btn-primary" type="button">取消</button>
+              <!-- 新增：明細按鈕 -->
+              <button @click="showDetail(item)" class="btn btn-primary">
+                詳細資料
+              </button>
+            </details>
+          </div>
+
+          <nav aria-label="分頁導覽">
+            <ul class="pagination">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a
+                  class="page-link"
+                  href="#"
+                  aria-label="Previous"
+                  @click.prevent="fetchProductPage(currentPage - 1)"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+
+              <li
+                class="page-item"
+                v-for="n in totalPages"
+                :key="n"
+                :class="{ active: currentPage === n }"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="fetchProductPage(n)"
+                >
+                  {{ n }}
+                </a>
+              </li>
+
+              <li
+                class="page-item"
+                :class="{ disabled: currentPage === totalPages }"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  aria-label="Next"
+                  @click.prevent="fetchProductPage(currentPage + 1)"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
+      <!-- 彈出視窗 Modal -->
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="card">
+          <div class="card-header">
+            <h3>商品詳細資料</h3>
+            <i @click="closeModal" class="bi bi-x-lg"></i>
+          </div>
+          <div class="card-body">
+            <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
+            <p>
+              <strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}
+            </p>
+            <p>
+              <strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}
+            </p>
+            <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
+            <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
+            <p>
+              <strong>材積(cm^3)：</strong>{{ selectedProduct.length *
+              selectedProduct.width * selectedProduct.height }}
+            </p>
+            <p><strong>長(cm)：</strong>{{ selectedProduct.length }}</p>
+            <p><strong>寬(cm)：</strong>{{ selectedProduct.width }}</p>
+            <p><strong>高(cm)：</strong>{{ selectedProduct.height }}</p>
+            <p>
+              <strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天
+            </p>
+            <p>
+              <strong>安全存量：</strong>{{ selectedProduct.safeStockQty || '無'
+              }}
+            </p>
+            <p><strong>創建日期：</strong>{{ selectedProduct.createdAt }}</p>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" type="button">
+              <i class="bi bi-save"></i>
+              更新資料
+            </button>
+            <button @click="closeModal" class="btn btn-primary" type="button">
+              取消
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-	
-  </div>
-</body>
+  </body>
 </html>

@@ -187,7 +187,7 @@
     <h1>歡迎使用我的倉儲系統</h1>
     <p>此網站尚在開發中...</p>
     <div
-      v-scope="{
+  v-scope="{
 	page: 'login',
 	username: '',
 	password: '',
@@ -256,6 +256,7 @@
 	totalPages: 1,
 	products: [],
 	inventory: [],
+	searchKeyword: '',
 
 	stockList: [],
 	async fetchProductPage(page = 1) {
@@ -266,7 +267,11 @@
 		const res = await fetch(this.getApiUrl('/api/products/page'), {
 		  method: 'POST',
 		  headers: { 'Content-Type': 'application/json' },
-		  body: JSON.stringify({ page, pageSize: this.pageSize })
+		  body: JSON.stringify({
+			keyword: this.searchKeyword, // 傳入關鍵字
+			page,
+			pageSize: this.pageSize
+		  })
 		});
 
 		if (!res.ok) {
@@ -364,7 +369,11 @@
             <div class="search-grid">
               <div class="search-item">
                 <span>商品名稱</span>
-                <input class="val-input" placeholder="輸入商品名稱" />
+                <input
+				  class="val-input"
+				  placeholder="輸入商品名稱"
+				  v-model="searchKeyword"
+				/>
               </div>
               <div class="search-item">
                 <span>廠商</span>

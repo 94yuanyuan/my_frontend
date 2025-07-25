@@ -495,10 +495,12 @@
 	totalPages: 1,
 
 	stockList: [],
+	selectedVendor: '',
+	vendors: [],  // 廠商清單
 	
 	async fetchProductPage(page = 1) {
 	  this.productPage = page;
-	  vendors: [],  // 廠商清單
+
 	  if (!this.vendors.length) await this.fetchVendors(); // 廠商下拉
 	  if (this.isLoading) return; // <== 防止重複點擊
 	  this.isLoading = true;	  // 鎖定按鈕
@@ -543,8 +545,6 @@
 	  this.selectedProduct = {};
 	},
 	
-	selectedVendor: '',
-	
 	async fetchVendors() {
 	  try {
 		const res = await fetch(utils.getApiUrl('/api/vendors'))
@@ -561,6 +561,8 @@
 	  }
 	}
   };
+
+  PetiteVue.createApp({ app, inventoryModule }).mount();
 </script>
 
 </html>

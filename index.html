@@ -255,87 +255,39 @@
 	pageSize: 5,
 	totalPages: 1,
 	products: [],
-	inventory: [],
 	searchKeyword: '',
 	searchAt: 0,
 
 	stockList: [],
 	async fetchProductPage(page = 1) {
 	  this.currentPage = page;
-	  this.message = ''; // 清空錯誤訊息
-
+	  this.message = '';
+	  
 	  try {
-		const res = await fetch(this.getApiUrl('/api/products/page'), {
-		  method: 'POST',
-		  headers: { 'Content-Type': 'application/json' },
-		  body: JSON.stringify({
-			keyword: this.searchKeyword, // 傳入關鍵字
-			dtAt: this.searchAt, // 傳入進貨時間
-			page,
-			pageSize: this.pageSize
-		  })
-		});
+	  	const res = await fetch(this.getApiUrl('/api/products/page'), {
+	  	method: 'POST',
+	  	  headers: { 'Content-Type': 'application/json' },
+	  	  body: JSON.stringify({
+	  	  	keyword: this.searchKeyword,
+	  	  	dtAt: this.searchAt,
+	  	  	page,
+	  	  	pageSize: this.pageSize
+	  	  })
+	  	});
 
 		if (!res.ok) {
-		  this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
-		  return;
+	  	  this.message = `伺服器錯誤 (${res.status})`;
+	  	  return;
 		}
 
-		const result = await res.json();
-		this.products = result.products;
-		this.totalPages = result.totalPages;
+	  	const result = await res.json();
+	  	this.stockList = result.products;
+	  	this.totalPages = result.totalPages;
 
 	  } catch (err) {
-		this.showError(err);
-		return;
+	  	this.showError(err);
 	  }
-
-	  try {
-		const productCodes = this.products.map(p => p.productCode);
-		const res = await fetch(this.getApiUrl('/api/inventory/by-products'), {
-		  method: 'POST',
-		  headers: { 'Content-Type': 'application/json' },
-		  body: JSON.stringify({ productCodes })
-		});
-
-		if (!res.ok) {
-		  this.message = `伺服器錯誤 (${res.status})，請稍後再試`;
-		  return;
-		}
-
-		result = await res.json();
-		this.inventory = result;
-
-	  } catch (err) {
-		this.showError(err);
-	  }
-
-	  this.stockList = this.products.map(p => {
-		const stocks = this.inventory.filter(i => i.productCode === p.productCode);
-		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
-
-		return {
-		  vendorName: p.vendorName,
-		  productNameZh: p.productNameZh,
-		  productNameEn: p.productNameEn,
-		  productCode: p.productCode,
-		  unit: p.unit,
-		  length: p.dimensions.length,
-		  width: p.dimensions.width,
-		  height: p.dimensions.height,
-		  shelfLifeDays: p.shelfLifeDays,
-		  safeStockQty: p.safeStockQty,
-		  createdAt: p.createdAt,
-		  updateAt: p.updateAt,
-		  stockByWarehouse: stocks.map(i => ({
-			warehouse: i.warehouse,
-			quantity: i.quantity
-		  })),
-		  total
-		};
-	  });
-
-	},
+	}
 
 	showModal: false,
 	selectedProduct: {},

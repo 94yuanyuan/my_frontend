@@ -252,7 +252,7 @@
 	},
 
 	currentPage: 1,
-	pageSize: 3,
+	pageSize: 5,
 	totalPages: 1,
 	products: [],
 	inventory: [],
@@ -315,7 +315,7 @@
 		const total = stocks.reduce((sum, i) => sum + i.quantity, 0);
 
 		return {
-		  client: p.client,
+		  vendorName: p.vendorName,
 		  productNameZh: p.productNameZh,
 		  productNameEn: p.productNameEn,
 		  productCode: p.productCode,
@@ -504,7 +504,7 @@
             <i @click="closeModal" class="bi bi-x-lg"></i>
           </div>
           <div class="card-body">
-            <p><strong>所屬公司：</strong>{{ selectedProduct.client }}</p>
+            <p><strong>所屬公司：</strong>{{ selectedProduct.vendorName }}</p>
             <p>
               <strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}
             </p>

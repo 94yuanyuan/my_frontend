@@ -186,9 +186,9 @@
   </style>
 
 <!-- petite-vue -->
-<script src="https://unpkg.com/petite-vue" defer></script>
+<script type="module">
+  import { createApp } from 'https://unpkg.com/petite-vue?module'
 
-<script defer>
   const utils = {
 	message: '',
 	//?testMode=1 測試模式
@@ -336,7 +336,7 @@
 	}
   };
 
-  PetiteVue.createApp({ app, inventoryModule }).mount();
+  createApp({ app, inventoryModule }).mount();
 </script>
 
   <body>

@@ -31,9 +31,9 @@
 	class="page"
 	:class="{ active: currentPage === 'login' }">
 	  <h2>登入系統 <small v-if="isTestMode">(測試模式)</small></h2>
-      <input v-model="loginAccount" placeholder="帳號" type="text" /><br />
-      <input v-model="loginPassword" placeholder="密碼" type="password" /><br />
-      <button @click="login" :disabled="isLoading || !loginAccount || !loginPassword">
+      <input v-model="username" placeholder="帳號" type="text" /><br />
+      <input v-model="password" placeholder="密碼" type="password" /><br />
+      <button @click="login" :disabled="isLoading || !username || !password">
         {{ isLoading ? '登入中...' : '登入' }}
       </button>
       <p class="message">{{ message }}</p>
@@ -44,7 +44,7 @@
 	class="page"
 	:class="{ active: currentPage === 'dashboard' }">
 	  <h2>Dashboard</h2>
-	  <p>歡迎，{{ loginAccount }}</p>
+	  <p>歡迎，{{ username }}</p>
 	  
 	  <!-- <button -->
 	  <!-- class="btn btn-primary" -->

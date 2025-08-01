@@ -192,9 +192,8 @@
 	}
   </style>
 
-  <body>
+<body>
   <div v-scope="app">
-  
 	<!-- 登入頁面 -->
 	<div
 	class="page"
@@ -226,6 +225,9 @@
 	  登出</button>
 	</div>
 
+  </div>
+  
+  <div v-scope="search_Inventory">
 	<!-- 庫存查詢頁 -->
     <div
 	class="container page"
@@ -233,7 +235,7 @@
       <h1 class="text-h1">查詢庫存</h1>
       <div
 	  class="search-box"
-	  v-scope="search_Inventory">
+	  v-scope="inventoryModule">
         <div class="search-grid">
           <div class="search-item">
             <span>商品名稱</span>
@@ -418,7 +420,7 @@
     </div>
 
   </div>
-  </body>
+</body>
 
 <script type="module">
   import { createApp } from 'https://unpkg.com/petite-vue?module';

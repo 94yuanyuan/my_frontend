@@ -5,6 +5,11 @@ import { utils } from './utils.js';
 	loginPassword: '',
 	currentPage: 'login',
 	isLoading: false, // <== 新增鎖定變數
+	
+    message: utils.message,
+    isTestMode: utils.isTestMode,
+    getApiUrl: utils.getApiUrl,
+    showError: utils.showError,
 
 	async login() {
 	  if (this.isLoading) return; // <== 防止重複點擊

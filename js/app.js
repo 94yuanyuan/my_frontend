@@ -1,8 +1,8 @@
 import { utils } from './utils.js';
 
   export const app = {
-  	loginAccount: '',
-	loginPassword: '',
+  	username: '',
+	password: '',
 	currentPage: 'login',
 	isLoading: false, // <== 新增鎖定變數
 	
@@ -21,8 +21,8 @@ import { utils } from './utils.js';
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-			loginAccount: this.loginAccount.trim(),
-			loginPassword: this.loginPassword
+			username: this.username.trim(),
+			password: this.password
 		  })
 		});
 
@@ -35,7 +35,7 @@ import { utils } from './utils.js';
 		const result = await res.json();
 		this.message = result.message;
 		if (result.success) {
-		  this.loginPassword = '';
+		  this.password = '';
 		  this.currentPage = 'dashboard';
 		}
 
@@ -47,8 +47,8 @@ import { utils } from './utils.js';
 	},
 	
 	logout() {
-	  this.loginAccount = '';
-	  this.loginPassword = '';
+	  this.username = '';
+	  this.password = '';
 	  this.currentPage = 'login';
 	  this.message = '';
 	}

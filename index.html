@@ -38,6 +38,24 @@
       </button>
       <p class="message">{{ message }}</p>
 	</div>
+	
+	<!-- Dashboard -->
+	<div
+	class="page"
+	:class="{ active: currentPage === 'dashboard' }">
+	  <h2>Dashboard</h2>
+	  <p>歡迎，{{ loginAccount }}</p>
+	  
+	  <!-- <button -->
+	  <!-- class="btn btn-primary" -->
+	  <!-- @click="gotoPage('inventory')"> -->
+	  <!-- 庫存查詢</button> -->
+	  
+	  <button
+	  class="btn btn-primary"
+	  @click="logout">
+	  登出</button>
+	</div>
 
   </div>
   </body>

@@ -1,6 +1,6 @@
 import { utils } from './utils.js';
 
-  export const inventoryModule = {
+  export const search_Inventory = {
     message: utils.message,
     isTestMode: utils.isTestMode,
     getApiUrl: utils.getApiUrl,

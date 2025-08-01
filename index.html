@@ -186,9 +186,9 @@
   </style>
 
 <!-- petite-vue -->
-<script type="module">
-  import { createApp } from 'https://unpkg.com/petite-vue?module'
+<script src="https://unpkg.com/petite-vue" defer init></script>
 
+<script>
   const utils = {
 	message: '',
 	//?testMode=1 測試模式
@@ -259,6 +259,7 @@
       this.currentPage = pageName
     }
   };
+  window.app = app;
   
   const inventoryModule = {
 	productPage: 1,
@@ -335,8 +336,8 @@
 	  }
 	}
   };
-
-  createApp({ app, inventoryModule }).mount();
+  window.inventoryModule = inventoryModule;
+  
 </script>
 
   <body>

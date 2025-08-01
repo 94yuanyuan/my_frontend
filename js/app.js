@@ -1,15 +1,15 @@
 import { utils } from './utils.js';
 
   export const app = {
-  	username: '',
-	password: '',
-	currentPage: 'login',
-	isLoading: false, // <== 新增鎖定變數
-	
     message: utils.message,
     isTestMode: utils.isTestMode,
     getApiUrl: utils.getApiUrl,
     showError: utils.showError,
+	
+  	username: '',
+	password: '',
+	currentPage: 'login',
+	isLoading: false, // <== 新增鎖定變數
 
 	async login() {
 	  if (this.isLoading) return; // <== 防止重複點擊
@@ -51,5 +51,9 @@ import { utils } from './utils.js';
 	  this.password = '';
 	  this.currentPage = 'login';
 	  this.message = '';
-	}
+	},
+	
+    gotoPage(pageName) {
+      this.currentPage = pageName
+    }
   };

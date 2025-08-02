@@ -76,7 +76,6 @@ import { utils } from './utils.js';
 	async fetchProductPage(page = 1) {
 	  this.productPage = page;
 
-	  if (!this.vendors.length) await this.fetchVendors(); // 廠商下拉
 	  if (this.isLoading) return; // <== 防止重複點擊
 	  this.isLoading = true;	  // 鎖定按鈕
 	  
@@ -118,22 +117,6 @@ import { utils } from './utils.js';
 	closeModal() {
 	  this.showModal = false;
 	  this.selectedProduct = {};
-	},
-	
-	async fetchVendors() {
-	  try {
-		const res = await fetch(utils.getApiUrl('/api/vendors'))
-		
-		if (!res.ok) {
-	  	  return;
-		}
-		
-		const result = await res.json()
-		this.vendors = result.vendors
-		
-	  } catch (err) {
-		utils.showError(err)
-	  }
 	}
 	//>
   };

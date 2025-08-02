@@ -51,9 +51,9 @@ import { utils } from './utils.js';
 	  this.password = '';
 	  this.currentPage = 'login';
 	  this.message = '';
-	},
+	}
 	
-    gotoPage(pageName) {
-      this.currentPage = pageName
-    }
+    //gotoPage(pageName) {
+    //  this.currentPage = pageName
+    //}
   };

@@ -58,19 +58,9 @@ import { utils } from './utils.js';
 	//<功能-頁籤
     gotoPage(pageName) {
       this.currentPage = pageName
-    },
+    }
 	//>
 	
 	//<功能-庫存查詢
-	productPage: 1,
-	products: [],
-	searchKeyword: '',
-	searchAt: 0,
-	pageSize: 5,
-	totalPages: 1,
-
-	stockList: [],
-	selectedVendor: '',
-	vendors: []
 	//>
   };

@@ -232,7 +232,39 @@
       <h1 class="text-h1">查詢庫存</h1>
       <div class="search-box">
         <div class="search-grid">
+          <div class="search-item">
+            <span>商品名稱</span>
+            <input
+			class="val-input"
+			placeholder="輸入商品名稱"
+			v-model="searchKeyword"/>
+          </div>
 
+
+
+          <div class="search-item">
+            <span>顯示筆數</span>
+            <select
+			class="val-input"
+			v-model="pageSize">
+              <option :value="5">5</option>
+              <option :value="10">10</option>
+              <option :value="15">15</option>
+            </select>
+          </div>
+
+          <div class="search-item">
+            <span>最新進貨</span>
+            <select
+			class="val-input"
+			v-model="searchAt">
+              <option :value="0">不限時間</option>
+              <option :value="1">1 天</option>
+              <option :value="7">1 周</option>
+              <option :value="30">1 月</option>
+              <option :value="365">1 年</option>
+            </select>
+          </div>
 		</div>
 
         <button
@@ -248,7 +280,44 @@
         <i class="bi bi-search"></i>
         <h3>開始查詢庫存</h3>
       </div>
-	  
+
+      <div
+        class="product-block"
+        v-for="item in stockList"
+        :key="item.productCode">
+        <details>
+          <summary class="product-summary">
+            {{ item.productNameZh }}
+          </summary>
+          <table class="stock-table">
+            <thead>
+              <tr>
+                <th>倉別</th>
+                <th>庫存數</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
+                <td>{{ s.warehouse }}</td>
+                <td class="text-right">{{ s.quantity }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="bold">總庫存數</td>
+                <td class="text-right bold">{{ item.total }}</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <!-- 新增：明細按鈕 -->
+          <!-- <button -->
+		  <!-- class="btn btn-primary" -->
+		  <!-- @click="showDetail(item)"> -->
+            <!-- 詳細資料 -->
+          <!-- </button> -->
+        </details>
+      </div>
 	</div>
 
   </div>

@@ -232,47 +232,7 @@
       <h1 class="text-h1">查詢庫存</h1>
       <div class="search-box">
         <div class="search-grid">
-          <div class="search-item">
-            <span>商品名稱</span>
-            <input
-			class="val-input"
-			placeholder="輸入商品名稱"
-			v-model="searchKeyword"/>
-          </div>
 
-          <div class="search-item">
-            <span>廠商</span>
-            <select
-			class="val-input"
-			v-model="selectedVendor">
-              <option :value="">All</option>
-			  <!-- <option v-for="v in vendors" :value="v.code">{{ v.name }}</option> -->
-            </select>
-          </div>
-
-          <div class="search-item">
-            <span>顯示筆數</span>
-            <select
-			class="val-input"
-			v-model="pageSize">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="15">15</option>
-            </select>
-          </div>
-
-          <div class="search-item">
-            <span>最新進貨</span>
-            <select
-			class="val-input"
-			v-model="searchAt">
-              <option :value="0">不限時間</option>
-              <option :value="1">1 天</option>
-              <option :value="7">1 周</option>
-              <option :value="30">1 月</option>
-              <option :value="365">1 年</option>
-            </select>
-          </div>
 		</div>
 
         <button

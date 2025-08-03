@@ -104,19 +104,6 @@ import { utils } from './utils.js';
 	  } finally {
 		this.isLoading = false; // 無論成功與否都解鎖
 	  }
-	},
-
-	showModal: false,
-	selectedProduct: {},
-
-	showDetail(product) {
-	  this.selectedProduct = product;
-	  this.showModal = true;
-	},
-
-	closeModal() {
-	  this.showModal = false;
-	  this.selectedProduct = {};
 	}
 	//>
   };

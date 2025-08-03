@@ -318,14 +318,103 @@
           </table>
 
           <!-- 新增：明細按鈕 -->
-          <!-- <button -->
-		  <!-- class="btn btn-primary" -->
-		  <!-- @click="showDetail(item)"> -->
-            <!-- 詳細資料 -->
-          <!-- </button> -->
+          <button
+		  class="btn btn-primary"
+		  @click="showdetail(item)">
+			詳細資料
+          </button>
         </details>
       </div>
+	  
+      <nav aria-label="分頁導覽">
+        <ul class="pagination">
+          <li class="page-item"
+		  :class="{ disabled: productPage === 1 }">
+            <a
+            class="page-link"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="fetchProductPage(productPage - 1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li
+          class="page-item"
+          v-for="n in totalPages"
+          :key="n"
+          :class="{ active: productPage === n }">
+            <a
+            class="page-link"
+            href="#"
+            @click.prevent="fetchProductPage(n)">
+			  {{ n }}
+			</a>
+          </li>
+
+          <li
+          class="page-item"
+          :class="{ disabled: productPage === totalPages }">
+            <a
+              class="page-link"
+              href="#"
+              aria-label="Next"
+              @click.prevent="fetchProductPage(productPage + 1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+	  
 	</div>
+	
+    <!-- 彈出視窗 Modal -->
+    <div
+	class="modal-overlay"
+	v-if="showModal"
+	@click.self="closeModal">
+      <div class="card">
+        <div class="card-header">
+          <h3>商品詳細資料</h3>
+          <i
+		  class="bi bi-x-lg"
+		  @click="closeModal"></i>
+        </div>
+        <div class="card-body">
+          <p><strong>所屬公司：</strong>{{ selectedProduct.vendorName }}</p>
+          <p><strong>商品名稱(中)：</strong>{{ selectedProduct.productNameZh }}</p>
+          <p><strong>商品名稱(英)：</strong>{{ selectedProduct.productNameEn }}</p>
+          <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
+          <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
+          <p><strong>材積(cm^3)：</strong>
+			{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}
+          </p>
+          <p><strong>長(cm)：</strong>{{ selectedProduct.length }}</p>
+          <p><strong>寬(cm)：</strong>{{ selectedProduct.width }}</p>
+          <p><strong>高(cm)：</strong>{{ selectedProduct.height }}</p>
+          <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
+          <p><strong>安全存量：</strong>
+			{{ selectedProduct.safeStockQty || '無' }}
+          </p>
+          <p><strong>創建日期：</strong>{{ selectedProduct.createdAt }}</p>
+          <p><strong>更新日期：</strong>{{ selectedProduct.updateAt }}</p>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" type="button">
+            <i class="bi bi-save"></i>
+            更新資料
+          </button>
+          <button
+		  class="btn btn-primary"
+		  type="button"
+		  @click="closeModal">
+            取消
+          </button>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </body>
 

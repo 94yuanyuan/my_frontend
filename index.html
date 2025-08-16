@@ -293,38 +293,73 @@
         class="product-block"
         v-for="item in stockList"
         :key="item.productCode">
-        <details>
-          <summary class="product-summary">
-            {{ item.productNameZh }}
-          </summary>
-          <table class="stock-table">
-            <thead>
-              <tr>
-                <th>倉別</th>
-                <th>庫存數</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
-                <td>{{ s.warehouse }}</td>
-                <td class="text-right">{{ s.quantity }}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td class="bold">總庫存數</td>
-                <td class="text-right bold">{{ item.total }}</td>
-              </tr>
-            </tfoot>
-          </table>
-
-          <!-- 新增：明細按鈕 -->
-          <button
-		  class="btn btn-primary"
-		  @click="showdetail(item)">
-			詳細資料
-          </button>
-        </details>
+		
+		<table class="table table-bordered">
+		<thead>
+		  <tr>
+		  <th>商品代碼</th>
+		  <th>商品名稱</th>
+		  <th>廠商</th>
+		  <th>倉庫庫存</th>
+		  <th>總庫存</th>
+		  <th>操作</th>
+		  </tr>
+		</thead>
+		<tbody>
+			<tr>
+			<td>{{ item.productCode }}</td>
+			<td>{{ item.productNameZh }}</td>
+			<td>{{ item.vendorName }}</td>
+			<td>
+			  <ul class="list-unstyled m-0">
+			  <li v-for="s in item.stockByWarehouse">
+			  	{{ s.warehouse }}: {{ s.quantity }}
+			  </li>
+			  </ul>
+			</td>
+			<td><strong>{{ item.totalStock }}</strong></td>
+			<td>
+			  <button
+			  class="btn btn-primary"
+			  @click="showdetail(item)">
+			    詳細資料
+			  </button>
+			</td>
+			</tr>
+		</tbody>
+		</table>
+		
+        <!-- <details> -->
+          <!-- <summary class="product-summary"> -->
+            <!-- {{ item.productNameZh }} -->
+          <!-- </summary> -->
+          <!-- <table class="stock-table"> -->
+            <!-- <thead> -->
+              <!-- <tr> -->
+                <!-- <th>倉別</th> -->
+                <!-- <th>庫存數</th> -->
+              <!-- </tr> -->
+            <!-- </thead> -->
+            <!-- <tbody> -->
+              <!-- <tr v-for="s in item.stockByWarehouse" :key="s.warehouse"> -->
+                <!-- <td>{{ s.warehouse }}</td> -->
+                <!-- <td class="text-right">{{ s.quantity }}</td> -->
+              <!-- </tr> -->
+            <!-- </tbody> -->
+            <!-- <tfoot> -->
+              <!-- <tr> -->
+                <!-- <td class="bold">總庫存數</td> -->
+                <!-- <td class="text-right bold">{{ item.total }}</td> -->
+              <!-- </tr> -->
+            <!-- </tfoot> -->
+          <!-- </table> -->
+        <!-- </details> -->
+		  <!-- <!-- 新增：明細按鈕 --> -->
+          <!-- <button -->
+		  <!-- class="btn btn-primary" -->
+		  <!-- @click="showdetail(item)"> -->
+			<!-- 詳細資料 -->
+          <!-- </button> -->
       </div>
 	  
       <nav aria-label="分頁導覽">

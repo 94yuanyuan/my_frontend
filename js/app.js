@@ -61,7 +61,7 @@ import { utils } from './utils.js';
       this.currentPage = pageName
 	  
 	  if (pageName === 'inventory') {
-		fetchVendors();
+		this.fetchVendors();
       }
     },
 	

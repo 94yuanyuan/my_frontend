@@ -56,9 +56,33 @@ import { utils } from './utils.js';
 	//>
 	
 	//<功能-頁籤
+	vendors: [],  // 廠商清單
     gotoPage(pageName) {
       this.currentPage = pageName
+	  
+	  if (pageName === 'inventory') {
+		fetchVendors();
+      }
     },
+	
+	async fetchVendors() {
+	  try {
+		const res = await fetch(utils.getApiUrl('/api/vendors'))
+		
+		if (!res.ok) {
+		  const errMsg = await res.text();
+		  utils.showError(`商場查詢失敗：${errMsg}`);
+		  
+	  	  return;
+		}
+		
+		const result = await res.json()
+		this.vendors = result.vendors
+		
+	  } catch (err) {
+		utils.showError(err)
+	  }
+	}
 	//>
 	
 	//<功能-庫存查詢
@@ -71,7 +95,6 @@ import { utils } from './utils.js';
 
 	stockList: [],
 	selectedVendor: '',
-	vendors: [],  // 廠商清單
 	
 	async fetchProductPage(page = 1) {
 	  this.productPage = page;

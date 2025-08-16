@@ -243,7 +243,8 @@
           <div class="search-item">
             <span>廠商</span>
             <select
-			class="val-input">
+			class="val-input"
+			v-model="searchVendor">>
               <option value="">All</option>
 			  <option v-for="v in vendors" :value="v.vendorCode">{{ v.vendorName }}</option>
             </select>

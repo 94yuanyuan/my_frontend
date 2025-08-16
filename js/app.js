@@ -92,9 +92,9 @@ import { utils } from './utils.js';
 	searchAt: 0,
 	pageSize: 5,
 	totalPages: 1,
+	searchVendor: '',
 
 	stockList: [],
-	selectedVendor: '',
 	
 	async fetchProductPage(page = 1) {
 	  this.productPage = page;
@@ -110,7 +110,8 @@ import { utils } from './utils.js';
 	  	  	keyword: this.searchKeyword,
 	  	  	dtAt: this.searchAt,
 	  	  	page,
-	  	  	pageSize: this.pageSize
+	  	  	pageSize: this.pageSize,
+			vendor: this.searchVendor
 	  	  })
 	  	});
 

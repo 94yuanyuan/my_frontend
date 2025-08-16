@@ -82,7 +82,7 @@ import { utils } from './utils.js';
 	  } catch (err) {
 		utils.showError(err)
 	  }
-	}
+	},
 	//>
 	
 	//<功能-庫存查詢

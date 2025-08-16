@@ -50,16 +50,15 @@
 	
 	.product-grid.header {
 	  font-weight: bold;
-	  border-bottom: 2px solid #333;
+	  border-bottom: 2px solid #464e58;
 	}
 	
 	.product-grid {
 	  display: grid;
-	  grid-template-columns: 150px 250px 150px 200px 80px 120px;
+	  grid-template-columns: 150px 1fr 150px 200px 80px 90px;
 	  align-items: center;
 	  gap: 8px;
 	  padding: 8px;
-	  border: 1px solid #ddd;
 	  margin-bottom: 10px;
 	}
 
@@ -304,44 +303,86 @@
         <h3>開始查詢庫存</h3>
       </div>
 	  
-	  
-	  <!-- 標頭 -->
-	  <div class="product-grid header">
-	    <div>商品代碼</div>
-	    <div>商品名稱</div>
-	    <div>廠商</div>
-	    <div>分倉庫存</div>
-	    <div>總庫存</div>
-	    <div>操作</div>
-	  </div>
-	  
-      <div
-        class="product-block"
-        v-for="item in stockList"
-        :key="item.productCode">
-
-		<div class="product-grid">
-		  <div>{{ item.productCode }}</div>
-		  <div>{{ item.productNameZh }}</div>
-		  <div>{{ item.vendorName }}</div>
-		  <div>
-		    <ul class="list-unstyled m-0">
-		     <li v-for="s in item.stockByWarehouse">
-				{{ s.warehouse }}: {{ s.quantity }}
-			 </li>
-		    </ul>
-		  </div>
-		  <div><strong>{{ item.totalStock }}</strong></div>
-		  <button
-		  class="btn btn-primary"
-		  @click="showdetail(item)">
-		    詳細資料
-		  </button>
-		</div>
-		  
-		<table class="stock-table">
-		</table>
+	  <div v-scope="{ showDetailed: true, toggleView() { this.showDetailed = !this.showDetailed } }">
+	    <!-- 切換按鈕 -->
+		<button class="btn btn-primary" @click="toggleView">
+			{{ showDetailed ? '切換成精簡版' : '切換成詳細版' }}
+		</button>
 		
+		<!-- 詳細版 -->
+		<div v-if="showDetailed">
+		<!-- 標頭 -->
+		<div class="product-grid header">
+			<div>商品代碼</div>
+			<div>商品名稱</div>
+			<div>廠商</div>
+			<div>分倉庫存</div>
+			<div>總庫存</div>
+			<div>操作</div>
+		</div>
+		
+		<!-- 資料列 -->
+		<div
+			class="product-grid"
+			v-for="item in stockList"
+			:key="item.productCode">
+			<div>{{ item.productCode }}</div>
+			<div>{{ item.productNameZh }}</div>
+			<div>{{ item.vendorName }}</div>
+			<div>
+			<ul class="list-unstyled m-0">
+				<li v-for="s in item.stockByWarehouse" :key="s.warehouse">
+				{{ s.warehouse }}: {{ s.quantity }}
+				</li>
+			</ul>
+			</div>
+			<div><strong>{{ item.totalStock }}</strong></div>
+			<button
+			class="btn btn-primary"
+			@click="showdetail(item)">
+			詳細資料
+			</button>
+		</div>
+		</div>
+		
+		<div v-else>
+		<div
+			class="product-grid"
+			v-for="item in stockList"
+			:key="item.productCode">
+			<details>
+			<summary class="product-summary">
+				{{ item.productNameZh }}
+			</summary>
+			<table class="stock-table">
+				<thead>
+				<tr>
+					<th>倉別</th>
+					<th>庫存數</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr v-for="s in item.stockByWarehouse" :key="s.warehouse">
+					<td>{{ s.warehouse }}</td>
+					<td class="text-right">{{ s.quantity }}</td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td class="bold">總庫存數</td>
+					<td class="text-right bold">{{ item.totalStock }}</td>
+				</tr>
+				</tfoot>
+			</table>
+			</details>
+			<button
+			class="btn btn-primary"
+			@click="showdetail(item)">
+			詳細資料
+			</button>
+		</div>
+		</div>
+
       </div>
 	  
       <nav aria-label="分頁導覽">

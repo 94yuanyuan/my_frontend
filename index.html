@@ -61,6 +61,10 @@
 	  padding: 8px;
 	  margin-bottom: 10px;
 	}
+	
+	.product-prune {
+	  display: initial;
+	}
 
     .stock-table {
       width: 100%;
@@ -291,14 +295,16 @@
 
         <button
 		class="btn btn-primary"
-		@click="fetchProductPage(1)"
+		@click="fetchProductPage(1)"; showResult = true"
 		:disabled="isLoading">
 		查詢</button>
 		
 		<div v-if="isLoading">查詢中...</div>
       </div>
 
-      <div class="text-h3">
+      <div
+	  class="text-h3"
+	  :class="{ 'd-none': showResult }">
         <i class="bi bi-search"></i>
         <h3>開始查詢庫存</h3>
       </div>
@@ -312,7 +318,9 @@
 		<!-- 詳細版 -->
 		<div v-if="showDetailed">
 		<!-- 標頭 -->
-		<div class="product-grid header">
+		<div
+		class="product-grid header"
+		:class="{ 'd-none': !showResult }">
 			<div>商品代碼</div>
 			<div>商品名稱</div>
 			<div>廠商</div>
@@ -347,7 +355,7 @@
 		
 		<div v-else>
 		<div
-			class="product-grid"
+			class="product-prune"
 			v-for="item in stockList"
 			:key="item.productCode">
 			<details>
@@ -374,12 +382,13 @@
 				</tr>
 				</tfoot>
 			</table>
-			</details>
 			<button
 			class="btn btn-primary"
 			@click="showdetail(item)">
 			詳細資料
 			</button>
+			
+			</details>
 		</div>
 		</div>
 

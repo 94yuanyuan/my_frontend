@@ -46,6 +46,7 @@
     .product-summary {
       font-weight: bolder;
       cursor: pointer;
+	  line-height: 3;
     }
 	
 	.product-grid.header {
@@ -64,9 +65,6 @@
 	
 	.product-prune {
 	  display: initial;
-	}
-	.loadMargin {
-	  margin-bottom: 34px;
 	}
 
     .stock-table {
@@ -317,9 +315,7 @@
 		</button>
       </div>
 
-	  <div
-	  class="loading"
-	  :class="{ 'loadMargin': !showDetailed }">
+	  <div class="loading">
 	  {{ isLoading ? '查詢中...' : '' }}
 	  </div>
       <div

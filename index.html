@@ -69,8 +69,8 @@
 
     .stock-table {
       width: 100%;
-      margin-top: 0.5em;
       border-collapse: collapse;
+	  margin-bottom: 16px;
     }
 
     .stock-table th,
@@ -357,7 +357,7 @@
 			<div><strong>{{ item.totalStock }}</strong></div>
 			<button
 			class="btn btn-primary"
-			@click="showdetail(item)">
+			@click="showDetail(item)">
 			詳細資料
 			</button>
 		</div>
@@ -394,7 +394,7 @@
 			</table>
 			<button
 			class="btn btn-primary"
-			@click="showdetail(item)">
+			@click="showDetail(item)">
 			詳細資料
 			</button>
 			

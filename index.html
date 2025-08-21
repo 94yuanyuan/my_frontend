@@ -395,7 +395,7 @@
 	  
       <nav
 	  aria-label="分頁導覽"
-	  :class="{ 'd-none': showResult }">
+	  :class="{ 'd-none': !showResult }">
         <ul class="pagination">
           <li class="page-item"
 		  :class="{ disabled: productPage === 1 || totalPages === 0 }">

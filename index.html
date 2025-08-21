@@ -273,7 +273,7 @@
             <select
 			class="val-input"
 			v-model="pageSize">
-              <option :value="5">5</option>
+              <option :value="3">3</option>
               <option :value="10">10</option>
               <option :value="15">15</option>
             </select>
@@ -299,6 +299,13 @@
 		:disabled="isLoading">
 		查詢</button>
 		
+		<!-- 切換按鈕 -->
+		<button
+		class="btn btn-primary"
+		@click="toggleView">
+		{{ showDetailed ? '切換成精簡版' : '切換成詳細版' }}
+		</button>
+		
 		<div v-if="isLoading">查詢中...</div>
       </div>
 
@@ -308,13 +315,7 @@
         <i class="bi bi-search"></i>
         <h3>開始查詢庫存</h3>
       </div>
-	  
-	  <div v-scope="{ showDetailed: true, toggleView() { this.showDetailed = !this.showDetailed } }">
-	    <!-- 切換按鈕 -->
-		<button class="btn btn-primary" @click="toggleView">
-			{{ showDetailed ? '切換成精簡版' : '切換成詳細版' }}
-		</button>
-		
+
 		<!-- 詳細版 -->
 		<div v-if="showDetailed">
 		<!-- 標頭 -->
@@ -331,9 +332,9 @@
 		
 		<!-- 資料列 -->
 		<div
-			class="product-grid"
-			v-for="item in stockList"
-			:key="item.productCode">
+		class="product-grid"
+		v-for="item in stockList"
+		:key="item.productCode">
 			<div>{{ item.productCode }}</div>
 			<div>{{ item.productNameZh }}</div>
 			<div>{{ item.vendorName }}</div>
@@ -355,9 +356,9 @@
 		
 		<div v-else>
 		<div
-			class="product-prune"
-			v-for="item in stockList"
-			:key="item.productCode">
+		class="product-prune"
+		v-for="item in stockList"
+		:key="item.productCode">
 			<details>
 			<summary class="product-summary">
 				{{ item.productNameZh }}
@@ -391,13 +392,13 @@
 			</details>
 		</div>
 		</div>
-
-      </div>
 	  
-      <nav aria-label="分頁導覽">
+      <nav
+	  aria-label="分頁導覽"
+	  :class="{ 'd-none': showResult }">
         <ul class="pagination">
           <li class="page-item"
-		  :class="{ disabled: productPage === 1 }">
+		  :class="{ disabled: productPage === 1 || totalPages === 0 }">
             <a
             class="page-link"
             href="#"
@@ -422,7 +423,7 @@
 
           <li
           class="page-item"
-          :class="{ disabled: productPage === totalPages }">
+          :class="{ disabled: productPage === totalPages || totalPages === 0 }">
             <a
               class="page-link"
               href="#"

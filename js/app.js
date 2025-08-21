@@ -6,7 +6,6 @@ import { utils } from './utils.js';
     getApiUrl: utils.getApiUrl,
     showError: utils.showError,
 	
-	showResult: false,
   	username: '',
 	password: '',
 	currentPage: 'login',
@@ -87,6 +86,7 @@ import { utils } from './utils.js';
 	//>
 	
 	//<功能-庫存查詢
+	showResult: false,
 	productPage: 1,
 	products: [],
 	searchKeyword: '',
@@ -130,10 +130,14 @@ import { utils } from './utils.js';
 		this.isLoading = false; // 無論成功與否都解鎖
 	  }
 	},
+	
+	showDetailed: true,
+	toggleView() {
+		this.showDetailed = !this.showDetailed
+	},
 
 	showModal: false,
 	selectedProduct: {},
-
 	showDetail(product) {
 	  this.selectedProduct = product;
 	  this.showModal = true;

@@ -168,6 +168,13 @@
       height: 38px;
       border-color: #464e58;
     }
+	
+	.loading {
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+	}
 
     .text-h3 {
       padding: 80px 0;
@@ -307,9 +314,8 @@
 		</button>
       </div>
 
-	  <div
-	  class ="ttt"
-	  :class="{ 'd-none': !isLoading }">查詢中...
+	  <div class="loading">
+	  {{ isLoading ? '查詢中...' : '' }}
 	  </div>
       <div
 	  class="text-h3"

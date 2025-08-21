@@ -65,6 +65,9 @@
 	.product-prune {
 	  display: initial;
 	}
+	.loadMargin {
+	  margin-bottom: 34px;
+	}
 
     .stock-table {
       width: 100%;
@@ -314,7 +317,9 @@
 		</button>
       </div>
 
-	  <div class="loading">
+	  <div
+	  class="loading"
+	  :class="{ 'loadMargin': !isLoading }">
 	  {{ isLoading ? '查詢中...' : '' }}
 	  </div>
       <div

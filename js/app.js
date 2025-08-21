@@ -6,7 +6,7 @@ import { utils } from './utils.js';
     getApiUrl: utils.getApiUrl,
     showError: utils.showError,
 	
-	showResult: '',
+	showResult: false,
   	username: '',
 	password: '',
 	currentPage: 'login',

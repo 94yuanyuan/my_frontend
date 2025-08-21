@@ -305,10 +305,12 @@
 		@click="toggleView">
 		{{ showDetailed ? '切換成精簡版' : '切換成詳細版' }}
 		</button>
-		
-		<div v-if="isLoading">查詢中...</div>
       </div>
 
+	  <div
+	  class ="ttt"
+	  :class="{ 'd-none': !isLoading }">查詢中...
+	  </div>
       <div
 	  class="text-h3"
 	  :class="{ 'd-none': showResult }">

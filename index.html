@@ -465,11 +465,11 @@
           <p><strong>商品代碼：</strong>{{ selectedProduct.productCode }}</p>
           <p><strong>單位：</strong>{{ selectedProduct.unit }}</p>
           <p><strong>材積(cm^3)：</strong>
-			{{ selectedProduct.length * selectedProduct.width * selectedProduct.height }}
+			{{ selectedProduct.dimensions.length * selectedProduct.dimensions.width * selectedProduct.dimensions.height }}
           </p>
-          <p><strong>長(cm)：</strong>{{ selectedProduct.length }}</p>
-          <p><strong>寬(cm)：</strong>{{ selectedProduct.width }}</p>
-          <p><strong>高(cm)：</strong>{{ selectedProduct.height }}</p>
+          <p><strong>長(cm)：</strong>{{ selectedProduct.dimensions.length }}</p>
+          <p><strong>寬(cm)：</strong>{{ selectedProduct.dimensions.width }}</p>
+          <p><strong>高(cm)：</strong>{{ selectedProduct.dimensions.height }}</p>
           <p><strong>保存期限：</strong>{{ selectedProduct.shelfLifeDays }}天</p>
           <p><strong>安全存量：</strong>
 			{{ selectedProduct.safeStockQty || '無' }}
